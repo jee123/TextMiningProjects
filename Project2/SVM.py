@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Wed Feb 17 16:11:36 2016
-
-@author: shubham
-"""
 
 import cPickle,gzip
 import numpy as np

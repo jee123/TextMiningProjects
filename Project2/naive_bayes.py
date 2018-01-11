@@ -17,7 +17,6 @@ g.close()
 print len(train_data[0])
 clf = GaussianNB()
 clf.fit(train_data[0],train_data[1])
-#y_score=clf.fit(train_data[0],train_data[1]).decision_function(test_data[0])
 predicted = clf.predict(test_data[0])
 label_test=test_data[1]
 print np.mean(predicted == label_test) 

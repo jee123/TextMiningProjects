@@ -1,16 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Mon Feb 22 15:35:45 2016
-
-@author: shubham
-"""
-
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Feb 17 16:11:36 2016
-
-@author: shubham
-"""
 
 import cPickle,gzip
 import numpy as np
@@ -31,15 +19,10 @@ with gzip.open("test_data.pkl.gz",'rb') as g:
 g.close() 
 label_test=test_data[1]
 
-
-
-
 clf = svm.SVC(kernel = 'linear')
 scores = cross_validation.cross_val_score(clf, train_data[0], train_data[1], cv=5)
-    #print np.mean(scores)
 
 print '\n'
-#clf = svm.SVC(kernel='linear',C=10**(-1)) 
 clf.fit(train_data[0],train_data[1])
 predicted = clf.predict(test_data[0])
 print np.mean(predicted == label_test) 

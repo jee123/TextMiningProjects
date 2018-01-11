@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Mon Feb 15 22:50:10 2016
 
-@author: Tushar Sudhakar Jee
-"""
 import cPickle,gzip
 import numpy as np
 from sklearn.decomposition import TruncatedSVD

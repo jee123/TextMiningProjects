@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Mon Feb 15 16:51:05 2016
 
-@author: shubham
-"""
 from sklearn.datasets import fetch_20newsgroups
 import re
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -20,9 +16,6 @@ def top_tfidf_feats(row,features, top_n=10):
     print top_feats
     print '\n'
     return
-
-
-
 
 categories_ra=['rec.autos','rec.motorcycles','rec.sport.baseball','rec.sport.hockey']
 train_ra=fetch_20newsgroups(subset='train',categories=categories_ra,shuffle=True,random_state=42,remove=('headers','footers','quotes'))
