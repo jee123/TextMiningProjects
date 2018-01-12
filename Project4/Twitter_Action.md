@@ -9,9 +9,9 @@
   * average number of followers of users posting the tweets(used user['followers_count']),      
   * average number of retweets for each hashtag in training tweet data(used tweet['tweet']['retweet_count']).    
 
-Tweets are stored in separate files for different hashtags and files are named as tweet[#hashtag].txt.
-The tweet file contains one tweet in each line and tweets are sorted with respect to their posting time. 
-Each tweet is a JSON string that you can load in Python as a dictionary.
+    Tweets are stored in separate files for different hashtags and files are named as tweet[#hashtag].txt.
+    The tweet file contains one tweet in each line and tweets are sorted with respect to their posting time. 
+    Each tweet is a JSON string that you can load in Python as a dictionary.
 
 #### 2.  Fit Linear Regression model using 5 features to predict number of tweets in the next hour:
   * Features extracted from tweet data from previous hour include :  
