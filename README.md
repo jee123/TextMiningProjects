@@ -133,3 +133,106 @@
        
        
 ## Project4: Popularity prediction Twitter
+  * Here we know the current and previous tweet activity for a hashtag and need to predict its tweet activity in the future. The 
+    prediction should help us determine whether the tweet will become more popular and if so then by how much.  
+  * Available Twitter data is collected by querying popular hashtags related to 2015 Super Bowl spanning a period starting 2 
+    weeks before game to a week after the game.  
+  * Steps :  
+    * We calculate statistics associated with each hashtag that includes 
+      * Average number of tweets per hour, average number of followers of users posting tweets and average number of retweets.    
+        These statistics helps us conclude that as hashtags become more generic, like #superbowl being more generic than 
+        #gopatriots, number of tweets per hour increases.     
+      * Further we plot and compare for #SuperBowl and #NFL, a histogram with 1-hour bins based on number of tweets in one hour 
+        over time. 
+        
+        <p align="center">
+        <img width="500" alt="screen shot 2018-01-15 at 12 01 07 am" src="https://user-images.githubusercontent.com/15849566/34932339-46c74b64-f987-11e7-88e3-ba52182ab275.png">
+        </p>
+
+       <p align="center">
+       <img width="500" alt="screen shot 2018-01-15 at 12 03 50 am" src="https://user-images.githubusercontent.com/15849566/34932462-b25ddb22-f987-11e7-8592-cad5cc202014.png">
+       </p>
+       
+       
+       * The above graphs conclude that number of tweets in an hour were high near the super-bowl event compared to days other  
+         than the super-bowl event.
+
+    * Next we fit a linear regression model using 5 features to predict number of tweets in next hour with features extracted 
+      from tweet data in previous hour. The features used are :
+      * x1 - number of tweets,  
+      * x2 - total number of retweets,
+      * x3 - sum of the number of followers of the users posting the hashtag,
+      * x4 - maximum number of followers of the users posting the hashtag,
+      * x5 - time of the day
+      We then discuss the models training accuracy and significance of each feature using t-test and P-value results of fitting 
+      the model.      
+      An example for the same is demonstrated by showing the P, t and R^2 values for #gopatriots.
+      
+      <p align="center">
+      <img width="550" alt="screen shot 2018-01-15 at 7 11 57 am" src="https://user-images.githubusercontent.com/15849566/34948945-75db006c-f9c3-11e7-8571-012efe3048fa.png">
+      </p>
+      
+         * Here x1,x2 and x5 are significant as they have very low P values and high t-value.   
+           R^2 value is reported to be 0.614.  
+    
+    * Then we design a regression model using the following features :
+      * _Network features_:
+        * Network indicates connectivity of users posting the tweets. The connectivity is indicative of how well the tweet can 
+          diffuse in the network. 
+          * Number of retweets: Sum of number of retweets in an hour(x1).
+          * Number of max followers: Here we count a list of followers for the users who tweeted in last hour and take the 
+            maximum (x3).
+          * Sum of number of people following the hashtag: As people following the tweets are the likely
+            users to tweet, we take the number of people following that hashtag as a feature(x2). 
+          * Number of mentions: Sum of number of tweets in a given hour containing '@' mentions(x5).
+          * Number of unique users: We also take the number of unique users which posted in last hours
+            as a feature(x6).
+      * _Time Series Features_:
+        * These indicate the trend of tweets in a given time interval. Since the past number of tweets values are extremely 
+          important, through these features we try to extract the tweet variation with time.  
+          * Moving Average: Averaging number of tweets in last five hours with reference to presentvalue(x7).    
+          * Moving Standard Deviation:Standard deviation of tweets in last ve hours with reference to present value(x8).  
+          * Derivative:Taking number of tweets to be a time-series,the Derivative indicates Slope value at present time(x9).  
+          * Derivative mean: Mean of past five derivative values. The derivate gives the trend for past values
+            which is a very good indicator for prediction(x10).  
+          * Past value: We take the past five values of number of tweets. This ensures we have enough past  
+            information to predict the values in next hour. This is similar to the linear prediction model used  
+            in many cases(x10-x15).    
+          * Time of day: Represent hours of the day with respect to a given time reference(x4).  
+          
+      * Using these Network and Time Series features we built a Linear Regression model. From that we get the significant 
+        features and then we do a scatter plot of Predictant values(number of tweets for next hour) vs significant features.   
+        Sample is shown for #gopatriots.  
+        
+        <p align="center">
+        <img width="650" alt="screen shot 2018-01-15 at 7 27 37 am" src="https://user-images.githubusercontent.com/15849566/34949691-ae8b30ba-f9c5-11e7-82a6-6d6f26264c58.png">
+        </p>
+        
+      * After doing several more scatter plots we concluded that the scatter plots indicate linear relation between significant 
+        variable and predictant value which was expected and in line with theoretical explanation of p and t values.  
+              
+    *  Average Prediction Error obtained from 10 fold cross validation over full dataset is :  
+       <p align="center">
+       <img width="300" alt="screen shot 2018-01-15 at 7 33 21 am" src="https://user-images.githubusercontent.com/15849566/34950006-acc6174e-f9c6-11e7-8581-89a9345ee178.png">
+       </p>
+       
+       * Then the dataset is divided for each hashtag into three periods:  
+         Period 1: Before  Feb 1, 8:00 AM    
+         Period 2: Between Feb 1, 8:00 AM and 8:00 PM    
+         Period 3: After Feb 1, 8:00 PM    
+         Cross validation results were calculated for each hashtag in these periods and the cross validation error tabulated.  
+         
+         <p align="center">
+         <img width="250" alt="screen shot 2018-01-15 at 7 39 05 am" src="https://user-images.githubusercontent.com/15849566/34950170-3e4d5114-f9c7-11e7-8cca-9fdf540cfffe.png">
+         </p>
+         
+    * After reading the time periods from the file we computed the hashtag occuring the maximum number of times in a given test 
+      file. The file along with their corresponding tweet prediction for next hour are as :
+      <p align="center">
+      <img width="700" alt="screen shot 2018-01-15 at 8 21 59 am" src="https://user-images.githubusercontent.com/15849566/34952073-4428de72-f9cd-11e7-9e79-630bd75b2d4f.png">
+      </p>
+      
+   
+        
+    
+      
